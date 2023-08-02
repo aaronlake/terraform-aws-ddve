@@ -20,9 +20,19 @@ resource "aws_instance" "ddve_ec2_instance" {
 
   ebs_block_device {
     delete_on_termination = true
+    encrypted             = true
     device_name           = "/dev/sda1"
     volume_type           = local.mappings["DdveConfigPerModel"][var.ddve_model]["RootDiskType"]
     volume_size           = local.mappings["DdveConfigPerModel"][var.ddve_model]["RootDiskSize"]
+  }
+
+  metadata_options {
+    http_endpoint = "enabled"
+    http_tokens   = "required"
+  }
+
+  root_block_device {
+    encrypted = true
   }
 
   tags = {
@@ -44,6 +54,7 @@ resource "aws_s3_bucket_acl" "s3_bucket" {
 resource "aws_ebs_volume" "nvram" {
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["NvramDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["NvramDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_NVRAM"])
@@ -54,6 +65,7 @@ resource "aws_ebs_volume" "metadata_disk1" {
   count             = local.is_metadata_disk_1_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_1"])
@@ -64,6 +76,7 @@ resource "aws_ebs_volume" "metadata_disk2" {
   count             = local.is_metadata_disk_2_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_2"])
@@ -74,6 +87,7 @@ resource "aws_ebs_volume" "metadata_disk3" {
   count             = local.is_metadata_disk_3_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_3"])
@@ -84,6 +98,7 @@ resource "aws_ebs_volume" "metadata_disk4" {
   count             = local.is_metadata_disk_4_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_4"])
@@ -94,6 +109,7 @@ resource "aws_ebs_volume" "metadata_disk5" {
   count             = local.is_metadata_disk_5_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_5"])
@@ -104,6 +120,7 @@ resource "aws_ebs_volume" "metadata_disk6" {
   count             = local.is_metadata_disk_6_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_6"])
@@ -114,6 +131,7 @@ resource "aws_ebs_volume" "metadata_disk7" {
   count             = local.is_metadata_disk_7_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_7"])
@@ -124,6 +142,7 @@ resource "aws_ebs_volume" "metadata_disk8" {
   count             = local.is_metadata_disk_8_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_8"])
@@ -134,6 +153,7 @@ resource "aws_ebs_volume" "metadata_disk9" {
   count             = local.is_metadata_disk_9_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_9"])
@@ -144,6 +164,7 @@ resource "aws_ebs_volume" "metadata_disk10" {
   count             = local.is_metadata_disk_10_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_10"])
@@ -154,6 +175,7 @@ resource "aws_ebs_volume" "metadata_disk11" {
   count             = local.is_metadata_disk_11_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_11"])
@@ -164,6 +186,7 @@ resource "aws_ebs_volume" "metadata_disk12" {
   count             = local.is_metadata_disk_12_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_12"])
@@ -174,6 +197,7 @@ resource "aws_ebs_volume" "metadata_disk13" {
   count             = local.is_metadata_disk_13_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_13"])
@@ -184,6 +208,7 @@ resource "aws_ebs_volume" "metadata_disk14" {
   count             = local.is_metadata_disk_14_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_14"])
@@ -194,6 +219,7 @@ resource "aws_ebs_volume" "metadata_disk15" {
   count             = local.is_metadata_disk_15_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_15"])
@@ -204,6 +230,7 @@ resource "aws_ebs_volume" "metadata_disk16" {
   count             = local.is_metadata_disk_16_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_16"])
@@ -214,6 +241,7 @@ resource "aws_ebs_volume" "metadata_disk17" {
   count             = local.is_metadata_disk_17_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_17"])
@@ -224,6 +252,7 @@ resource "aws_ebs_volume" "metadata_disk18" {
   count             = local.is_metadata_disk_18_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_18"])
@@ -234,6 +263,7 @@ resource "aws_ebs_volume" "metadata_disk19" {
   count             = local.is_metadata_disk_19_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_19"])
@@ -244,6 +274,7 @@ resource "aws_ebs_volume" "metadata_disk20" {
   count             = local.is_metadata_disk_20_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_20"])
@@ -254,6 +285,7 @@ resource "aws_ebs_volume" "metadata_disk21" {
   count             = local.is_metadata_disk_21_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_21"])
@@ -264,6 +296,7 @@ resource "aws_ebs_volume" "metadata_disk22" {
   count             = local.is_metadata_disk_22_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_22"])
@@ -274,6 +307,7 @@ resource "aws_ebs_volume" "metadata_disk23" {
   count             = local.is_metadata_disk_23_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_23"])
@@ -284,6 +318,7 @@ resource "aws_ebs_volume" "metadata_disk24" {
   count             = local.is_metadata_disk_24_valid ? 1 : 0
   size              = local.mappings["DdveConfigPerModel"][var.ddve_model]["PerMetadataDiskSize"]
   type              = local.mappings["DdveConfigPerModel"][var.ddve_model]["MetadataDiskType"]
+  encrypted         = true
   availability_zone = aws_instance.ddve_ec2_instance.availability_zone
   tags = {
     Name = join("", [var.ddve_name_tag, "_MetadataDisk_24"])
