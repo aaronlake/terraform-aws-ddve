@@ -1,9 +1,6 @@
-# tflint-ignore: snake_case
-
 data "aws_region" "current" {}
 
 resource "aws_instance" "ddve_ec2_instance" {
-  // CF Property(ImageId) = local.mappings["DdveConfigPerRegion"][data.aws_region.current.name]["AmiId"]
   instance_type          = local.mappings["DdveConfigPerModel"][var.ddve_model]["InstanceType"]
   subnet_id              = var.ddve_subnet_id
   vpc_security_group_ids = var.ddve_security_group_ids
