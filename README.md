@@ -2,6 +2,9 @@ Terraform module to create a Dell EMC Data Domain Virtual Edition (DD VE)
 instance in AWS. This module is 100% untested at this point, assume it will
 cause your AWS account to be deleted and your house to burn down.
 
+This module is based on the CloudFormation template provided by Dell EMC
+here: https://aws.amazon.com/marketplace/pp/prodview-32kgz2d4acdns
+
 ## Requirements
 
 No requirements.
