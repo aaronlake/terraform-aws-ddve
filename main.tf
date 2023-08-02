@@ -1,3 +1,9 @@
+/*
+ * Terraform module to create a Dell EMC Data Domain Virtual Edition (DD VE)
+ * instance in AWS. This module is 100% untested at this point, assume it will
+ * cause your AWS account to be deleted and your house to burn down.
+*/
+
 data "aws_region" "current" {}
 
 resource "aws_instance" "ddve_ec2_instance" {
